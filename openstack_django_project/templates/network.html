@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+      {% load static%}
+      <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+      <style>
+        
+        .top{  
+          position: fixed;
+          width: 100%;
+         
+          background-color: #f2f2f2;
+        }
+    
+        .topnav {
+         
+          overflow: hidden;
+          background-color: #f2f2f2;
+          left:0;
+        }
+    
+        .topnav a {
+          float: right;
+          color: black;
+          text-align: center;
+          padding: 10px 16px;
+          text-decoration: none;
+          font-size: 17px;
+    
+        }
+    
+        .topnav a:hover{
+          background-color:#ddd ;
+          color:black ;
+    
+        }
+    
+        .topnav a.active{
+          background-color: white;
+          color: black;
+        }
+    
+        .sidenav{
+          height: 100%;
+          width: 160px;
+          position: fixed;
+         /* top: 102px;*/
+          left: 10;
+          background-color: #f2f2f2;
+          overflow: hidden;
+          
+        }
+    
+    
+        .sidenav a {
+         padding: 14px 14px;
+         text-decoration: none;
+         font-size: 20px;
+         color: black;
+         display: block;
+    
+        }
+        .sidenav a:hover{
+          background-color:#ddd ;
+          color:black ;
+    
+        }
+    
+        .sidenav a.active{
+          background-color: #428bca;
+          color: white;
+        }
+    
+        .main {
+          padding-left: 170px;
+          margin-right: 0px;
+          font-size: 28px;
+          padding-top: 10px;
+          /* top: 102px; */
+        }
+    
+        input[type=submit],input[type=reset] {
+      background-color: #428bca;
+      color: white;
+      padding: 6px 12px;
+      text-decoration: none;
+      /* margin: 3px 1px; */
+      cursor: pointer;
+    }
+    
+    /*for pie charts*/ 
+    .row {
+      display: flex;
+      border-width: 1mm;
+      width: 80%;
+      height: 100px;
+      padding-left: 120px;
+      
+    }
+    
+    /* Create two equal columns that sits next to each other */
+    .column {
+      flex: 50%;
+      background-color: #f2f2f2;
+      padding: 10px;
+      height: 300px;
+    }
+      </style>
+    
+    </head>
+<body>
+  <div class="top" >
+    <!-- <img src="{% static 'images/search_log.png'%}" alt="logo"  width="40" style="padding-left: 200px;padding-top:100px"> -->
+    <h1 style="text-align:center;"><i><b>CLOUD INVESTIGATOR</b></i></h1>
+     
+   
+    <div class="topnav">
+    <a href="{% url 'logout' %}"> LOGOUT </a>
+    <a href="{% url 'home' %}">HOME </a>
+    </div>
+ </div>
+ <div style="padding-top: 120px;">
+ <div class="sidenav">
+   <a href="{% url 'horizon' %}">Horizon </a>
+   <a class="active" href="{% url 'network' %}">Network </a>
+   <a  href="{% url 'instance' %}">Instance </a>
+   <a href="{% url 'volume' %}">Volume </a>
+   <a href="{% url 'image' %}">Image</a>
+  </div>
+ </div>
+ <div class="main">
+  <div style="padding-left: 200px;">
+    <h6 style="padding-left: 280px;"> APPLY FILTER ON NETWORK LOGS</h6>
+    <form name="check_date" style="text-align:center;" action="neutron_result">
+      {% csrf_token %}
+      <fieldset style="width:70%;">  
+        <table>
+       
+      From Date:
+      <input type="date" name="FromDate" value="Date" id="Pick_From" required>&nbsp&nbsp&nbsp&nbsp&nbsp
+      To Date:
+      <input type="date" name="ToDate" value="Date" id="Pick_To" required>
+      <br><br>
+      Network-ID
+       <select id="network_id" name="network_id">
+        <option selected>Select</option>
+        <option value="f6bd7b75-5af9-4056-aa91-3c04e944ca32">f6bd7b75-5af9-4056-aa91-3c04e944ca32</option>
+        <option value="03991b8d-121a-46be-8fa8-d2b82abd325c">03991b8d-121a-46be-8fa8-d2b82abd325c</option>
+        <option value="1"> </option>
+      </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+     Neutron-Agent
+     <select id="neutron_agent" name="neutron_agent">
+      <option selected>Select</option>
+      <option value="neutron-l3-agent[17023]">L3 Agent</option>
+      <option value="neutron-dhcp-agent[16323]">DHCP Agent</option>
+      <option value="neutron-server[13776]">Neutron Server</option>
+      <option value="neutron-openvswitch-agent[15619]">Openvswitch Agent</option>
+    </select>
+     <br><br>
+     Request-ID
+     <select id="request_id" name="request_id">
+      <option selected>Select</option>
+      <option value="85118bc0-e4fb-4388-82c6-0c6f7e8526a4">85118bc0-e4fb-4388-82c6-0c6f7e8526a4</option>
+      <option value="00da9139-4b87-40e3-85cf-baaec69301c4">00da9139-4b87-40e3-85cf-baaec69301c4</option>
+      <option value="67d0520d-085d-4215-b4e5-ee738ea2de34">67d0520d-085d-4215-b4e5-ee738ea2de34</option>
+      <option value="276d2e77-bcd8-40ba-86be-22f82321005b">276d2e77-bcd8-40ba-86be-22f82321005b</option>
+      <option value="3958730c-05d4-4311-ac42-c07c852f4669">3958730c-05d4-4311-ac42-c07c852f4669</option>
+      <option value="5a7620cb-2265-4dbb-b1ce-40be3f3384e3">5a7620cb-2265-4dbb-b1ce-40be3f3384e3</option>
+        <option value="ec9fefdf-dc95-4071-9dc3-238a22acc5bf">ec9fefdf-dc95-4071-9dc3-238a22acc5bf</option>
+    </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+      Log-Level
+       <select id="priority" name="priority">
+        <option selected>Select</option>
+        <option value="INFO">Info</option>
+        <option value="DEBUG">Debug</option>
+        <option value="AUDIT">Audit</option>
+        <option value="WARNING">Warning</option>
+        <option value="ERROR">Error</option>
+        
+      </select><br><br>
+          <input type="submit" value="Submit" name="submit"  >&nbsp&nbsp&nbsp&nbsp&nbsp
+          <input type="reset" value="Reset" name="Reset" >
+      </table>
+    </fieldset>
+  </form>
+  <h6 style="padding-left: 400px;"></h6>
+  <p style="text-align: centre;font-size: 18px;">*Note:Use same date for both start and end date to get log data for a particular date</p>
+      <h6 style="padding-left: 340px;padding-top: 10px">TOTAL RECORDS={{count}}<br><br>STATISTICAL REPORT</h6>
+  </div>
+  <div class="row">
+    <div class="column">
+      <div id="chartContainer1" style="width: 50%; height: 300px;float: right;"></div> 
+    </div>
+    <div class="column">
+      <div id="chartContainer2" style="width: 50%; height: 300px;float: left;"></div>
+    
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+  var date=new Date()
+  Pick_To.max = date.toISOString().split("T")[0];
+  var next_date = new Date(date.getTime() - 86400000); // + 1 day in ms
+  next_date.toLocaleDateString();
+  Pick_From.max = next_date.toISOString().split("T")[0] ;
+
+  var count_info="{{count_info}}"
+  var count_debug="{{count_debug}}"
+  var count_audit="{{count_audit}}"
+  var count_warning="{{count_warning}}"
+  var count_error= "{{count_error}}"
+  var count_dhcp="{{count_dhcp}}"
+  var count_server="{{count_server}}"
+  var count_openvswitch="{{count_openvswitch}}"
+  var count_l3="{{count_l3}}"
+  
+ 
+
+  var chart = new CanvasJS.Chart("chartContainer1",
+    {
+        animationEnabled: true,
+        title: {
+            text: "LOG-PRIORITY-LEVEL",
+        },
+        legend: {
+          horizontalAlign: "right",
+          verticalAlign: "center"
+        },
+        data: [
+        {
+      
+            type: "pie",
+            showInLegend: true,
+            dataPoints: [
+                { y: count_info, legendText: "INFO", indexLabel: "INFO" },
+                { y: count_debug, legendText: "DEBUG", indexLabel: "DEBUG" },
+                { y: count_audit, legendText: "AUDIT", indexLabel: "AUDIT" },
+                { y: count_warning, legendText: "WARNING", indexLabel: "WARNING" },
+                { y: count_error, legendText: "ERROR", indexLabel: "ERROR" },
+                
+                
+            ]
+        },
+        ]
+    });
+    chart.render();
+
+    var chart = new CanvasJS.Chart("chartContainer2",
+    {
+        animationEnabled: true,
+        title: {
+            text: "NEUTRON-AGENTS",
+        },
+        legend: {
+          horizontalAlign: "right",
+          verticalAlign: "center"
+        },
+        data: [
+        {
+      
+            type: "pie",
+            showInLegend: true,
+            dataPoints: [
+                { y: count_l3, legendText: "L3-AGENT", indexLabel: "L3-AGENT" },
+                { y: count_server, legendText: "NEUTRON-SERVER", indexLabel: "NEUTRON-SERVER"},
+                { y: count_dhcp, legendText: "DHCP-AGENT", indexLabel: "DHCP-AGENT"},
+                { y: count_openvswitch, legendText: "OPENVSWITCH-AGENT", indexLabel: "OPENVSWITCH-AGENT"},
+                
+            ]
+        },
+        ]
+    });
+    chart.render();
+
+    
+
+
+  
+</script>
+
+
+</body>
+</html>

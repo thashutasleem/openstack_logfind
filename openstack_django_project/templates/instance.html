@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  
+
+    .top {
+    padding: 14px 16px;
+    }
+
+    .topnav {
+      overflow: hidden;
+      background-color: #f2f2f2;
+      left:0;
+    }
+
+    .topnav a {
+      float: right;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+
+    }
+
+    .topnav a:hover{
+      background-color:#ddd ;
+      color:black ;
+
+    }
+
+    .topnav a.active{
+      background-color: white;
+      color: black;
+    }
+
+    .sidenav{
+      height: 80%;
+      width: 160px;
+      position: fixed;
+      top: 102px;
+      left: 10;
+      background-color: #f2f2f2;
+      overflow: hidden;
+      padding-top: 50px;
+    }
+
+
+    .sidenav a {
+     padding: 14px 16px;
+     text-decoration: none;
+     font-size: 20px;
+     color: #818181;
+     display: block;
+
+    }
+    .sidenav a:hover{
+      background-color:#ddd ;
+      color:black ;
+
+    }
+
+    .sidenav a.active{
+      background-color: white;
+      color: black;
+    }
+
+    .main {
+      margin-left: 380px;
+      margin-right: 0px;
+      font-size: 28px;
+      padding-top: 70px;
+      /* top: 102px; */
+    }
+
+    input[type=submit] {
+  background-color: #428bca;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+  </style>
+
+</head>
+<body>
+  <div class=top>
+    <a href="{% url 'home' %}"> Logo </a>
+  </div>
+
+  <div class="topnav">
+    <a href="{% url 'logout' %}"> LOGOUT </a>
+    <a href="{% url 'home' %}">HOME </a>
+ </div>
+
+ <div class="sidenav">
+   <a href="{% url 'horizon' %}">Horizon </a>
+   <a href="{% url 'network' %}">Network </a>
+   <a class="active" href="{% url 'instance' %}">Instance </a>
+   <a href="{% url 'volume' %}">Volume </a>
+   <a href="{% url 'image' %}">Image</a>
+  </div>
+  <div class="main">
+    <form style="padding-left: 300px;"> Instance-ID
+      <select required>
+        <option value="" disabled selected hidden>Select Instance</option>
+        <option value="0">Open </option>
+        <option value="1">Closed </option>
+</select>
+</form>
+<br>
+    <form name="check_date" style="text-align:center;" action="/action_page.php">
+      <fieldset style="width:70%">
+        <table>
+        From Date:
+        <input type="date" name="FromDate" value="Date">
+        To Date:
+        <input type="date" name="ToDate" value="Date">
+        <br><br>
+        <input type="submit" value="Submit">
+      </table>
+      </fieldset>
+    </form>
+
+<h6 style="padding-left: 400px;"> OR</h6>
+
+    <form name="check_time" style="text-align:center;" action="/action_page.php">
+      <fieldset style="width:70%">
+
+        Date:
+        <input type="date" name="Date" value="Date">
+        <br><br>
+        From Time:
+        <input type="time" name="Time" value="Time">
+        To Time:
+      <input type="time" name="Time" value="Time">
+        <br><br>
+      <input type="submit" value="Submit">
+      </table>
+    </fieldset>
+    </form>
+
+  </div>
+
+
+</body>
+</html>
